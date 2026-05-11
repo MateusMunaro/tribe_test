@@ -1,0 +1,141 @@
+<<<<<<< LEFT
+import re
+
+
+def validate_user(username, email, age):
+    # Enhanced validation with multiple checks
+    if username is None or not username.strip() or len(username) < 3:
+        raise ValueError("Username must be at least 3 characters long")
+    if email is None or not email.strip() or not is_valid_email_format(email):
+        raise ValueError("Invalid email format")
+    if age < 13 or age > 120:
+        raise ValueError("Age must be between 13 and 120")
+    if contains_invalid_characters(username):
+        raise ValueError("Username contains invalid characters")
+    return True
+
+
+def validate_password(password):
+    if password is None or len(password) < 8:
+        raise ValueError("Password must be at least 8 characters long")
+    if not has_upper_case(password) or not has_lower_case(password) or not has_digit(password):
+        raise ValueError("Password must contain uppercase, lowercase and digit")
+    return True
+
+
+def validate_email(email):
+    if email is None or "@" not in email or "." not in email:
+        raise ValueError("Email must contain @ and . symbols")
+    if email.startswith("@") or email.endswith("@"):
+        raise ValueError("Email format is invalid")
+    return True
+
+
+def is_valid_email_format(email):
+    return re.match(r"^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$", email) is not None
+
+
+def contains_invalid_characters(username):
+    return re.search(r"[<>\"'&]", username) is not None
+
+
+def has_upper_case(s):
+    return re.search(r"[A-Z]", s) is not None
+
+
+def has_lower_case(s):
+    return re.search(r"[a-z]", s) is not None
+
+
+def has_digit(s):
+    return re.search(r"\d", s) is not None
+=======
+def validate_user(username, email, age):
+    # Different validation approach with logging
+    if username is None or username == "":
+        log_validation_error("Username is null or empty")
+        return False
+    if len(username) > 50:
+        log_validation_error("Username too long")
+        return False
+    if email is None or email == "":
+        log_validation_error("Email is null or empty")
+        return False
+    if not is_valid_business_email(email):
+        log_validation_error("Email domain not allowed")
+        return False
+    if age < 18 or age > 100:
+        log_validation_error("Age not in valid range for business users")
+        return False
+    if is_restricted_username(username):
+        log_validation_error("Username is restricted")
+        return False
+    return True
+
+
+def validate_password(password):
+    if password is None or len(password) < 10:
+        log_validation_error("Password too short")
+        return False
+    if not has_special_character(password):
+        log_validation_error("Password must contain special character")
+        return False
+    if is_common_password(password):
+        log_validation_error("Password is too common")
+        return False
+    return True
+
+
+def validate_email(email):
+    if email is None or "@" not in email:
+        log_validation_error("Email format invalid")
+        return False
+    if len(email) > 100:
+        log_validation_error("Email too long")
+        return False
+    if is_disposable_email(email):
+        log_validation_error("Disposable email not allowed")
+        return False
+    return True
+
+
+def log_validation_error(message):
+    print(f"[VALIDATION ERROR] {message}")
+
+
+def is_valid_business_email(email):
+    allowed_domains = ["company.com", "business.org", "enterprise.net"]
+    for domain in allowed_domains:
+        if email.endswith("@" + domain):
+            return True
+    return False
+
+
+def is_restricted_username(username):
+    restricted = ["admin", "root", "system", "test"]
+    for r in restricted:
+        if r in username.lower():
+            return True
+    return False
+
+
+def has_special_character(s):
+    import re
+    return re.search(r"[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>/?]", s) is not None
+
+
+def is_common_password(password):
+    common = ["password123", "123456789", "qwertyuiop"]
+    for c in common:
+        if password.lower() == c:
+            return True
+    return False
+
+
+def is_disposable_email(email):
+    disposable = ["10minutemail.com", "tempmail.org", "guerrillamail.com"]
+    for d in disposable:
+        if email.endswith("@" + d):
+            return True
+    return False
+>>>>>>> RIGHT

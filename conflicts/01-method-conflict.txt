@@ -1,0 +1,12 @@
+def greet(name):
+<<<<<<< LEFT
+    # Left adds an exclamation mark for enthusiasm.
+    return f"Hello, {name}!"
+=======
+    # Right uppercases the name for emphasis.
+    return f"Hello, {name.upper()}"
+>>>>>>> RIGHT
+
+
+def farewell(name):
+    return f"Bye, {name}"
